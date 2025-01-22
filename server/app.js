@@ -14,7 +14,7 @@ const app = express();
 
 // CORS Configuration
 const corsOptions = {
-  origin: "http://localhost:3000", 
+  origin: process.env.REACT_SERVER_URL, 
   credentials: true,
 };
 

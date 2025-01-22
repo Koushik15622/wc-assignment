@@ -1,10 +1,15 @@
 import React from "react";
 import Button from '@mui/material/Button';
-import logo from '../assets/logo192.png'; 
+import logo from '../assets/logo192.png';
+import api from '../api';
 
 const Login = () => {
-  const handleLogin = () => {
-    window.location.href = "http://localhost:5000/auth/google";
+  const handleLogin = async () => {
+    try {
+      window.location.href = api.defaults.baseURL + "/auth/google";
+    } catch (error) {
+      console.error("There was an error making the request", error);
+    }
   };
 
   return (
