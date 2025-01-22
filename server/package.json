@@ -1,0 +1,26 @@
+{
+  "name": "whitecarrot-server",
+  "version": "1.0.0",
+  "description": "Backend server for Whitecarrot Intern Assignment using MERN stack.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Koushik PLN",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cookie-session": "^2.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "googleapis": "^144.0.0",
+    "mongoose": "^8.9.5",
+    "passport": "^0.5.3",
+    "passport-google-oauth20": "^2.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
