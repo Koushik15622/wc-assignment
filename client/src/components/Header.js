@@ -8,7 +8,7 @@ import '../assets/CustomButton.css';
 const Header = () => {
   const handleLogout = async () => {
     try {
-      await axios.post("/auth/logout", {}, { withCredentials: true });
+      await axios.get("/auth/logout", {}, { withCredentials: true });
       window.location.href = "/";
     } catch (error) {
       console.error("Error during logout:", error);

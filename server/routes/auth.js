@@ -13,7 +13,7 @@ router.get(
   }
 );
 
-router.post("/logout", (req, res) => {
+router.get("/logout", (req, res) => {
   res.clearCookie("session");
   res.status(200).json({ message: "Logged out successfully" });
 });
