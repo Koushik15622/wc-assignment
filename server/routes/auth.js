@@ -10,6 +10,7 @@ router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
+    res.cookie("session", req.session, { httpOnly: true, secure: true });
     res.redirect(process.env.REACT_SERVER_URL+"/dashboard");
   }
 );
