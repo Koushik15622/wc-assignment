@@ -42,7 +42,7 @@ In the `api.js` file located in the client folder, update the `baseURL` with the
 
 ```javascript
 const api = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: 'https://localhost:5000',
 });
 ```
 
