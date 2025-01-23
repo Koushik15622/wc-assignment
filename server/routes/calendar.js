@@ -3,7 +3,7 @@ const { google } = require("googleapis");
 const router = express.Router();
 
 router.get("/events", async (req, res) => {
-  console.log("User : ",req.user);
+  console.log("User value:",req.user);
   if (!req.user){
     return res.status(401).send("Unauthorized"); 
   }
