@@ -1,8 +1,9 @@
 const express = require("express");
 const passport = require("passport");
 const router = express.Router();
-const dotenv = require("dotenv");
-dotenv.config();
+
+// Replace these values with your actual configuration
+const REACT_SERVER_URL = "http://localhost:3000";
 
 router.get("/google", passport.authenticate("google", { scope: ["profile", "email", "https://www.googleapis.com/auth/calendar.events.readonly"] }));
 
@@ -10,9 +11,13 @@ router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
-    res.cookie("session", req.session, { httpOnly: true, secure: true });
-    console.log("Session : ",req.session);
-    res.redirect(process.env.REACT_SERVER_URL+"/dashboard");
+    // Set a cookie with the session information
+    res.cookie("session", req.session, {
+      httpOnly: true,
+      secure: true, // Only use secure cookies in production
+      sameSite: "None", // Allow cross-site cookies
+    });
+    res.redirect(REACT_SERVER_URL + "/dashboard");
   }
 );
 
