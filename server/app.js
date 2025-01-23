@@ -26,6 +26,9 @@ app.use(
     name: "session",
     keys: [process.env.SESSION_KEY],
     maxAge: 24 * 60 * 60 * 1000, // 1 day
+    secure: true,
+    httpOnly: true,
+    sameSite: "None"
   })
 );
 app.use(express.json());
