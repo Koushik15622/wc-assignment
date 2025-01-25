@@ -10,6 +10,7 @@ const Dashboard = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
+    console.log("Token: ", token);
     if (token) {
       localStorage.setItem('jwtToken', token);
       window.history.replaceState({}, document.title, window.location.pathname); // Remove token from URL

@@ -16,19 +16,8 @@ router.get(
   (req, res) => {
     // Generate JWT token
     const token = jwt.sign({ id: req.user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-    // Set the cookie header
-    res.setHeader(
-      'Set-Cookie',
-      cookie.serialize('XSRF-TOKEN', token, {
-        sameSite: 'lax', // lax is important, don't use 'strict' or 'none'
-        httpOnly: true, // must be true in production
-        secure: true, // must be true in production
-        maxAge: 60 * 60 * 24 * 7 * 52, // 1 year
-      })
-    );
-
-    res.redirect(process.env.REACT_SERVER_URL + "/dashboard");
+    console.log("Token: ", token);
+    res.redirect(process.env.REACT_SERVER_URL + "/dashboard?token=" + token);
   }
 );
 
