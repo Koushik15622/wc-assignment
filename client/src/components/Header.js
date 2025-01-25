@@ -9,6 +9,7 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       await axios.get("/auth/logout", {}, { withCredentials: true });
+      localStorage.clear();
       window.location.href = "/";
     } catch (error) {
       console.error("Error during logout:", error);
