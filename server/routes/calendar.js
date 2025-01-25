@@ -1,18 +1,30 @@
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const { google } = require("googleapis");
 const router = express.Router();
 
 router.get("/events", async (req, res) => {
-  console.log("session:",req.session);
-  if (!req.user){
-    return res.status(401).send("Unauthorized"); 
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ message: "Unauthorized" });
   }
 
-  const oauth2Client = new google.auth.OAuth2();
-  oauth2Client.setCredentials({ access_token: req.user.accessToken });
+  const token = authHeader.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
 
-  const calendar = google.calendar({ version: "v3", auth: oauth2Client });
   try {
+    // Verify the JWT token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Set up OAuth2 client with the access token
+    const oauth2Client = new google.auth.OAuth2();
+    oauth2Client.setCredentials({ access_token: decoded.accessToken });
+
+    const calendar = google.calendar({ version: "v3", auth: oauth2Client });
+
+    // Fetch events from the calendar
     const events = await calendar.events.list({
       calendarId: "primary",
       timeMin: new Date().toISOString(),
@@ -20,10 +32,12 @@ router.get("/events", async (req, res) => {
       singleEvents: true,
       orderBy: "startTime",
     });
-    events.data.name = req.user.profile.name.givenName;
-    res.json(events.data);
+
+    // Send the events and user name as response
+    res.status(200).json({ items: events.data.items, name: decoded.name });
   } catch (error) {
-    res.status(500).send("Error fetching events:" + error); 
+    console.error("Error fetching events:", error);
+    res.status(500).json({ message: "Error fetching events", error });
   }
 });
 

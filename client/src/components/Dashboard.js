@@ -8,6 +8,12 @@ const Dashboard = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    if (token) {
+      localStorage.setItem('jwtToken', token);
+      window.history.replaceState({}, document.title, window.location.pathname); // Remove token from URL
+    }
     const fetchEvents = async () => {
       try {
         const response = await axios.get("/calendar/events");
