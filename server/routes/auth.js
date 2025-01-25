@@ -15,7 +15,8 @@ router.get(
   passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
     // Generate JWT token
-    const token = jwt.sign({ id: req.user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    console.log("User: ", req.user);
+    const token = jwt.sign({ id: req.user.id, accessToken: req.user.accessToken }, process.env.JWT_SECRET, { expiresIn: '1h' });
     console.log("Token: ", token);
     res.redirect(process.env.REACT_SERVER_URL + "/dashboard?token=" + token);
   }
