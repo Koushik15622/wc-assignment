@@ -3,7 +3,8 @@ const passport = require("passport");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const cookie = require("cookie");
-
+const dotenv = require("dotenv");
+dotenv.config();
 
 router.get("/google", passport.authenticate("google", { scope: ["profile", "email", "https://www.googleapis.com/auth/calendar.events.readonly"] }), (req, res) => {
   console.log("Response from google auth: ", res.statusCode);
